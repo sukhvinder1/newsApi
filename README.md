@@ -1,1 +1,1 @@
-initial commit for spring rest mvc poc
+initial poc for spring rest mvc
