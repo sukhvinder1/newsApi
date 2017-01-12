@@ -9,6 +9,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +29,12 @@ import com.sun.syndication.io.XmlReader;
  */
 @RestController
 @RequestMapping("/sources")
+@PropertySource("classpath:application.properties")
 public class SourcesController {
+
+
+	@Autowired
+	private Environment env;
 
 	@RequestMapping(value = "/sukh", method = RequestMethod.GET)
 	@ResponseBody
@@ -39,7 +47,8 @@ public class SourcesController {
 	private SyndFeed getFeed() {
 		SyndFeed feed = null;
 		try {
-			URL feedUrl = new URL("http://www.hindustantimes.com/rss/topnews/rssfeed.xml");
+			URL feedUrl = new URL(env.getProperty("hindtimes.url"));
+			//URL feedUrl = new URL("http://rss.cbc.ca/lineup/topstories.xml");
 			SyndFeedInput input = new SyndFeedInput();
 			feed = input.build(new XmlReader(feedUrl));
 		} catch (Exception ex) {
