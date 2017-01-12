@@ -5,12 +5,21 @@
 package com.news.common.controller;
 
 import java.awt.PageAttributes.MediaType;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.news.common.dto.Sukh;
+import com.news.common.dto.Source;
+import com.news.common.dto.SourcesDto;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
 
 /**
  * @author Sukh
@@ -18,14 +27,45 @@ import com.news.common.dto.Sukh;
 @RestController
 @RequestMapping("/sources")
 public class SourcesController {
-	
-	@RequestMapping(value="/sukh", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/sukh", method = RequestMethod.GET)
 	@ResponseBody
-	public Sukh getSources(){
-		Sukh sukh = new Sukh();
-		sukh.setAge("24");
-		sukh.setName("SukhvinderSingh");
-		return sukh;
+	public SourcesDto getSources() {
+		SourcesDto dto = new SourcesDto();
+		dto.setSources(getSourceList());
+		return dto;
+	}
+
+	private SyndFeed getFeed() {
+		SyndFeed feed = null;
+		try {
+			URL feedUrl = new URL("http://www.hindustantimes.com/rss/topnews/rssfeed.xml");
+			SyndFeedInput input = new SyndFeedInput();
+			feed = input.build(new XmlReader(feedUrl));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("ERROR: " + ex.getMessage());
+		}
+
+		return feed;
+	}
+
+	private List<Source> getSourceList() {
+		List<Source> listOfSource = new ArrayList<>();
+		
+		if (getFeed() != null){
+			List<SyndEntry> items = getFeed().getEntries();
+			if (items != null) {
+				for (SyndEntry item : items) {
+					Source source = new Source();
+					source.setLink(item.getLink().toString());
+					source.setAuthor(item.getAuthor().toString());
+					source.setTitle(item.getTitle().toString());
+					listOfSource.add(source);
+				}
+			}
+		}
+		return listOfSource;
 	}
 
 }
