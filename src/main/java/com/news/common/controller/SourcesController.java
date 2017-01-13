@@ -4,7 +4,6 @@
  */
 package com.news.common.controller;
 
-import java.awt.PageAttributes.MediaType;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
