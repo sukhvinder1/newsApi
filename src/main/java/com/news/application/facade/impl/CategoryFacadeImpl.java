@@ -1,24 +1,22 @@
 package com.news.application.facade.impl;
 
-import com.news.application.facade.CategoriesMapper;
 import com.news.application.facade.CategoryFacade;
 import com.news.application.facade.dto.CategoriesDto;
-import com.news.application.facade.dto.Category;
-import com.news.providers.CategoryProvider;
+import com.news.application.facade.mapper.CategoriesMapper;
 
 import javax.inject.Inject;
+import java.util.List;
+
 /**
  * Created by Sukh on 1/13/2017.
  */
-
 public class CategoryFacadeImpl implements CategoryFacade {
 
     @Inject
-    CategoryProvider categoryProvider;
+    CategoriesMapper categoryMapper;
 
     @Override
-    public CategoriesDto getCategories() {
-        CategoriesMapper categoriesMapper = new CategoriesMapper();
-        return categoriesMapper.prepareDto();
+    public  List<CategoriesDto> getCategories() {
+        return categoryMapper.prepareDto();
     }
 }

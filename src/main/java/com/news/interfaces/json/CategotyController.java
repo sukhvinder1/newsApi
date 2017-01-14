@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by Sukhvinder on 1/13/2017.
@@ -22,7 +23,7 @@ public class CategotyController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
-    public CategoriesDto getCategories(){
+    public List<CategoriesDto> getCategories(){
         return categoryFacade.getCategories();
     }
 }
