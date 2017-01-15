@@ -1,18 +1,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.3.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
 
     <context:component-scan base-package="com.news.*" />
     <mvc:annotation-driven />
     <bean name="categoryFacade" class="com.news.application.facade.impl.CategoryFacadeImpl"/>
     <bean name="categoryProvider" class="com.news.providers.impl.CategoryProviderImpl"/>
     <bean name="categoriesMapper" class="com.news.application.facade.mapper.CategoriesMapper"/>
+    <util:properties id="properties" location="classpath:application.properties" />
 
 </beans>
