@@ -14,9 +14,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.mock;
 
 /**
  * Created by sukh on 2017-01-15.

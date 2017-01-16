@@ -2,6 +2,8 @@ package com.news.interfaces.json;
 
 import com.news.application.facade.CategoryFacade;
 import com.news.application.facade.dto.CategoriesDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,8 +24,7 @@ public class CategotyController {
     private CategoryFacade categoryFacade;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    @ResponseBody
-    public List<CategoriesDto> getCategories(){
-        return categoryFacade.getCategories();
+    public ResponseEntity<List<CategoriesDto>> getCategories(){
+        return new ResponseEntity<>(categoryFacade.getCategories(), HttpStatus.OK);
     }
 }
