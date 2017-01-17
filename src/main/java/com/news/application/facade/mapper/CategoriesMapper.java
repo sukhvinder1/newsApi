@@ -2,9 +2,13 @@ package com.news.application.facade.mapper;
 
 import com.news.application.facade.constant.AppConstant;
 import com.news.application.facade.dto.CategoriesDto;
+import com.news.application.facade.utill.PropertyManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -19,10 +23,15 @@ public class CategoriesMapper {
     @Autowired
     private Properties properties;
 
+    @Autowired
+    PropertyManager propertyManager;
+
     private List<String> techSources = new ArrayList<>();
     private List<String> topSources = new ArrayList<>();
 
     public List<CategoriesDto> prepareDto(){
+
+
         //creating enumeration for all the properties name
         Enumeration e = properties.propertyNames();
 
@@ -32,9 +41,9 @@ public class CategoriesMapper {
 
             //assign the source to appropriate category
             if (key.contains(AppConstant.TECH)){
-                prepareSources(techSources, properties.getProperty(key));
+                prepareSources(techSources, propertyManager.getProperty(key));
             }else if (key.contains(AppConstant.TOP)){
-                prepareSources(topSources, properties.getProperty(key));
+                prepareSources(topSources, propertyManager.getProperty(key));
             }
         }
         return response();

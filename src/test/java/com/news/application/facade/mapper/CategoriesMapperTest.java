@@ -1,6 +1,7 @@
 package com.news.application.facade.mapper;
 
 import com.news.application.facade.dto.CategoriesDto;
+import com.news.application.facade.utill.PropertyManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -25,17 +27,21 @@ public class CategoriesMapperTest {
     @InjectMocks
     private CategoriesMapper mapper;
 
+
     @Mock
     private Properties properties;
+
+    @Mock
+    private PropertyManager propertyManager;
 
     private Hashtable<String,String> hashtable;
 
     @Before
     public void setup(){
         when(properties.propertyNames()).thenReturn(prepareEnumration());
-        when(properties.getProperty("tech.cnn")).thenReturn(hashtable.get("tech.cnn"));
-        when(properties.getProperty("top.bbc")).thenReturn(hashtable.get("top.bbc"));
-        when(properties.getProperty("tech.mashable")).thenReturn(hashtable.get("tech.mashable"));
+        when(propertyManager.getProperty("tech.cnn")).thenReturn(hashtable.get("tech.cnn"));
+        when(propertyManager.getProperty("top.bbc")).thenReturn(hashtable.get("top.bbc"));
+        when(propertyManager.getProperty("tech.mashable")).thenReturn(hashtable.get("tech.mashable"));
     }
 
     @Test
