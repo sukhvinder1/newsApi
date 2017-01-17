@@ -2,6 +2,7 @@ package com.news.interfaces.json;
 
 import com.news.application.facade.CategoryFacade;
 import com.news.application.facade.dto.CategoriesDto;
+import com.news.architecture.Exceptions.NewsSystemException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,5 +27,10 @@ public class CategotyController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<CategoriesDto>> getCategories(){
         return new ResponseEntity<>(categoryFacade.getCategories(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public ResponseEntity<List<CategoriesDto>> getError(){
+        throw new NewsSystemException("Generic Error");
     }
 }
