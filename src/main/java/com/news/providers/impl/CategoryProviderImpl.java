@@ -1,6 +1,5 @@
 package com.news.providers.impl;
 
-import com.news.application.facade.CategoryFacade;
 import com.news.application.facade.dto.CategoriesDto;
 import com.news.providers.CategoryProvider;
 

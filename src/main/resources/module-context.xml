@@ -16,12 +16,12 @@
 
     <context:component-scan base-package="com.news.*" />
     <mvc:annotation-driven />
-
     <context:annotation-config/>
+    <util:properties id="properties" location="classpath:application.properties" />
+
     <bean name="categoryFacade" class="com.news.application.facade.impl.CategoryFacadeImpl"/>
     <bean name="categoryProvider" class="com.news.providers.impl.CategoryProviderImpl"/>
     <bean name="categoriesMapper" class="com.news.application.facade.mapper.CategoriesMapper"/>
-    <bean name="propertyManager" class="com.news.application.facade.utill.PropertyManager"/>
-    <util:properties id="properties" location="classpath:application.properties" />
+    <bean name="propertyManager" class="com.news.application.facade.util.PropertyManager"/>
 
 </beans>
