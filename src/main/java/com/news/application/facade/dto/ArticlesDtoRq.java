@@ -3,7 +3,7 @@ package com.news.application.facade.dto;
 import java.util.List;
 
 /**
- * Created by sinsukhv on 2017-01-21.
+ * Created by Sukh on 2017-01-21.
  */
 public class ArticlesDtoRq {
     private String categoryName;
