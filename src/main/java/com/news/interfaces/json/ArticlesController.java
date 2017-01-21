@@ -1,10 +1,18 @@
 package com.news.interfaces.json;
 
 import com.news.application.facade.ArticlesFacade;
+import com.news.application.facade.dto.ArticlesDtoRq;
+import com.news.application.facade.dto.ArticlesDtoRs;
+import com.news.application.facade.dto.CategoriesDto;
+import com.news.architecture.Exceptions.NewsSystemException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by sinsukhv on 2017-01-21.
@@ -16,5 +24,10 @@ public class ArticlesController {
     @Inject
     private ArticlesFacade articlesFacade;
 
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<ArticlesDtoRs>> getArticles(ArticlesDtoRq req){
+        return new ResponseEntity<>(articlesFacade.getArticles(req), HttpStatus.OK);
+    }
 
 }
