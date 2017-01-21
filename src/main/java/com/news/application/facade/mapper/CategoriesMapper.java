@@ -55,8 +55,8 @@ public class CategoriesMapper {
     }
 
     private  List<CategoriesDto> response() {
-        prepareList(AppConstant.TECHNOLOGY, techSources);
-        prepareList(AppConstant.TOP_NEWS, topSources);
+        prepareList(AppConstant.TECH, techSources);
+        prepareList(AppConstant.TOP, topSources);
         prepareList(AppConstant.SPORTS, sportsSources);
         prepareList(AppConstant.BUSINESS, businessSources);
         prepareList(AppConstant.FINANCE, financeSources);

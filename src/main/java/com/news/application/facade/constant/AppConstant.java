@@ -13,9 +13,4 @@ public class AppConstant {
     public static final String ENTERTAINMENT = "entertainment";
     public static final String LOCAL = "local";
 
-
-    // Categories full names
-
-    public static final String TECHNOLOGY = "Technology";
-    public static final String TOP_NEWS = "Top-News";
 }

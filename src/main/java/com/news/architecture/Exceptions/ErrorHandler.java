@@ -17,6 +17,6 @@ public class ErrorHandler {
         Error error = new Error();
         error.setErrorCode("001");
         error.setErrorMessage(e.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
