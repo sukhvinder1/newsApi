@@ -17,10 +17,12 @@ public class CategoriesMapper {
     @Inject
     PropertyManager propertyManager;
 
-    private List<String> techSources = new ArrayList<>();
-    private List<String> topSources = new ArrayList<>();
+    private List<String> techSources, topSources, sportsSources, businessSources, financeSources, entertainmentSources, localSources;
+    List<CategoriesDto> categoriesDtoList;
 
     public List<CategoriesDto> prepareDto() {
+        initializingVariables();
+
         //creating enumeration for all the properties name
         Enumeration e = propertyManager.getPropertyNames();
 
@@ -29,10 +31,20 @@ public class CategoriesMapper {
             String key = (String) e.nextElement();
 
             //assign the source to appropriate category
-            if (key.contains(AppConstant.TECH)){
+            if (key.contains(AppConstant.TECH)) {
                 prepareSources(techSources, propertyManager.getProperty(key));
-            }else if (key.contains(AppConstant.TOP)){
+            } else if (key.contains(AppConstant.TOP)) {
                 prepareSources(topSources, propertyManager.getProperty(key));
+            } else if (key.contains(AppConstant.SPORTS)) {
+                prepareSources(sportsSources, propertyManager.getProperty(key));
+            } else if (key.contains(AppConstant.BUSINESS)) {
+                prepareSources(businessSources, propertyManager.getProperty(key));
+            } else if (key.contains(AppConstant.FINANCE)) {
+                prepareSources(financeSources, propertyManager.getProperty(key));
+            } else if (key.contains(AppConstant.ENTERTAINMENT)) {
+                prepareSources(entertainmentSources, propertyManager.getProperty(key));
+            } else if (key.contains(AppConstant.LOCAL)) {
+                prepareSources(localSources, propertyManager.getProperty(key));
             }
         }
         return response();
@@ -43,17 +55,32 @@ public class CategoriesMapper {
     }
 
     private  List<CategoriesDto> response() {
-        List<CategoriesDto> categoriesDtoList = new ArrayList<>();
-        CategoriesDto dto = new CategoriesDto();
-        dto.setCategoryName(AppConstant.TECHNOLOGY);
-        dto.setSources(techSources);
+        prepareList(AppConstant.TECHNOLOGY, techSources);
+        prepareList(AppConstant.TOP_NEWS, topSources);
+        prepareList(AppConstant.SPORTS, sportsSources);
+        prepareList(AppConstant.BUSINESS, businessSources);
+        prepareList(AppConstant.FINANCE, financeSources);
+        prepareList(AppConstant.ENTERTAINMENT, entertainmentSources);
+        prepareList(AppConstant.LOCAL, localSources);
 
-        CategoriesDto dto2 = new CategoriesDto();
-        dto2.setCategoryName(AppConstant.TOP_NEWS);
-        dto2.setSources(topSources);
-
-        categoriesDtoList.add(dto);
-        categoriesDtoList.add(dto2);
         return categoriesDtoList;
+    }
+
+    private void prepareList(String category, List<String> sources){
+        CategoriesDto dto = new CategoriesDto();
+        dto.setCategoryName(category);
+        dto.setSources(sources);
+        categoriesDtoList.add(dto);
+    }
+
+    private void initializingVariables(){
+        categoriesDtoList = new ArrayList<>();
+        techSources = new ArrayList<>();
+        topSources = new ArrayList<>();
+        sportsSources = new ArrayList<>();
+        businessSources = new ArrayList<>();
+        financeSources = new ArrayList<>();
+        entertainmentSources = new ArrayList<>();
+        localSources = new ArrayList<>();
     }
 }

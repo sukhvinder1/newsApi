@@ -7,6 +7,11 @@ public class AppConstant {
 
     public static final String TECH = "tech";
     public static final String TOP = "top";
+    public static final String SPORTS = "sports";
+    public static final String BUSINESS = "business";
+    public static final String FINANCE = "finance";
+    public static final String ENTERTAINMENT = "entertainment";
+    public static final String LOCAL = "local";
 
 
     // Categories full names
