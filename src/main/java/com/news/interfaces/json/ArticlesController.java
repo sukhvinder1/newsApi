@@ -7,6 +7,7 @@ import com.news.application.facade.dto.CategoriesDto;
 import com.news.architecture.Exceptions.NewsSystemException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * Created by sinsukhv on 2017-01-21.
+ * Created by Sukh on 2017-01-21.
  */
 @RestController
 @RequestMapping(value = "/articles")
@@ -25,8 +26,9 @@ public class ArticlesController {
     private ArticlesFacade articlesFacade;
 
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<List<ArticlesDtoRs>> getArticles(ArticlesDtoRq req){
+    @RequestMapping(value = "/all", method = RequestMethod.POST)
+    public ResponseEntity<List<ArticlesDtoRs>> getArticles(@RequestBody List<ArticlesDtoRq> req){
+        System.out.println(req.get(0).getCategoryName());
         return new ResponseEntity<>(articlesFacade.getArticles(req), HttpStatus.OK);
     }
 

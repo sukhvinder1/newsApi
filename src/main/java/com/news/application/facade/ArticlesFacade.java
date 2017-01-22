@@ -6,11 +6,11 @@ import com.news.application.facade.dto.ArticlesDtoRs;
 import java.util.List;
 
 /**
- * Created by sinsukhv on 2017-01-21.
+ * Created by Sukh on 2017-01-21.
  */
 public interface ArticlesFacade {
 
-      List<ArticlesDtoRs> getArticles(ArticlesDtoRq req);
+      List<ArticlesDtoRs> getArticles(List<ArticlesDtoRq> req);
 
 
 }
