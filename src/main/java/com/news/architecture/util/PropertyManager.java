@@ -1,4 +1,4 @@
-package com.news.application.facade.util;
+package com.news.architecture.util;
 
 import com.news.architecture.Exceptions.NewsSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
