@@ -27,5 +27,6 @@
     <bean name="articlesFacade" class="com.news.application.facade.impl.ArticlesFacadeImpl" />
     <bean name="technologyProvider" class="com.news.providers.impl.TechnologyProviderImpl" />
     <bean name="topNewsProvider" class="com.news.providers.impl.TopNewsProviderImpl" />
+    <bean name="romeServiceProvider" class="com.news.providers.Backend.impl.RomeServiceProviderImpl" />
 
 </beans>

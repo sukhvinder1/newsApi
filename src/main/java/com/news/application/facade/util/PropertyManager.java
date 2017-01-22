@@ -15,6 +15,9 @@ public class PropertyManager {
     @Autowired
     private Properties properties;
 
+    @Autowired
+    private Properties sourcesUrl;
+
     HashMap<String, String> propertiesMap = new HashMap<String, String>();
 
     public void loadProperties(){
@@ -46,6 +49,9 @@ public class PropertyManager {
         return properties.propertyNames();
     }
 
+    public String getSourcePropertyUrl(String key) {
+        return sourcesUrl.getProperty(key);
+    }
 
 
 }
