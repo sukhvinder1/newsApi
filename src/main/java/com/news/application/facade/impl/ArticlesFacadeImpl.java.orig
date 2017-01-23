@@ -3,20 +3,21 @@ package com.news.application.facade.impl;
 import com.news.application.facade.ArticlesFacade;
 import com.news.application.facade.dto.ArticlesDtoRq;
 import com.news.application.facade.dto.ArticlesDtoRs;
+<<<<<<< HEAD
 import com.news.application.facade.util.SortArticles;
 import com.news.providers.impl.TechnologyProviderImpl;
 import com.news.providers.impl.TopNewsProviderImpl;
+=======
+import com.news.providers.impl.*;
+>>>>>>> develop
 
 import javax.inject.Inject;
-<<<<<<< HEAD
+import java.util.ArrayList;
+import java.util.List;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-=======
-import java.util.ArrayList;
-import java.util.List;
->>>>>>> develop
 
 /**
  * Created by Sukh on 2017-01-21.
@@ -32,16 +33,27 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
     @Inject
     private TopNewsProviderImpl topNewsProvider;
 
+    @Inject
+    private SportsNewsProviderImpl sportsNewsProvider;
+
+    @Inject
+    private BusinessNewsProviderImpl businessNewsProvider;
+
+    @Inject
+    private LocalNewsProviderImpl localNewsProvider;
+
+    @Inject
+    private FinanceNewsProviderImpl financeNewsProvider;
+
+    @Inject
+    private EntertainmentNewsProviderImpl entertainmentNewsProvider;
+
     private List<ArticlesDtoRs> articlesDtoRs;
 
     @Override
     public List<ArticlesDtoRs> getArticles(List<ArticlesDtoRq> req) {
-<<<<<<< HEAD
-        for (ArticlesDtoRq articlesDtoRq : req) {
-=======
         articlesDtoRs = new ArrayList<>();
         for(ArticlesDtoRq articlesDtoRq : req) {
->>>>>>> develop
             delegatingToProvider(articlesDtoRq.getCategoryName(), articlesDtoRq.getSources());
         }
         System.out.println("number of articles : " + articlesDtoRs.size());
@@ -50,24 +62,37 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
 
     /**
      * @param category
-     * @param sourcesList this method will delegate to appropriate provider based on the category param
-     *                    and it will bring the list of Articles and add it to response
+     * @param sourcesList
+     * this method will delegate to appropriate provider based on the category param
+     * and it will bring the list of Articles and add it to response
      */
-<<<<<<< HEAD
-    private void delegatingToProvider(String category, List<String> sourcesList) {
-=======
     private List<ArticlesDtoRs> delegatingToProvider(String category, List<String> sourcesList){
->>>>>>> develop
         switch (category) {
             case "tech":
                 articlesDtoRs.addAll(technologyProvider.getArticles(sourcesList));
-                //sortArticles.sortArticles(articlesDtoRs);
+<<<<<<< HEAD
+                sortArticles.sortArticles(articlesDtoRs);
                 break;
             case "top":
                 articlesDtoRs.addAll(topNewsProvider.getArticles(sourcesList));
-                //sortArticles.sortArticles(articlesDtoRs);
+                sortArticles.sortArticles(articlesDtoRs);
                 break;
             //TODO still have to add others cases
+=======
+            case "top":
+                articlesDtoRs.addAll(topNewsProvider.getArticles(sourcesList));
+            case "business":
+                articlesDtoRs.addAll(businessNewsProvider.getArticles(sourcesList));
+            case "sports":
+                articlesDtoRs.addAll(sportsNewsProvider.getArticles(sourcesList));
+            case "finance":
+                articlesDtoRs.addAll(financeNewsProvider.getArticles(sourcesList));
+            case "entertainment":
+                articlesDtoRs.addAll(entertainmentNewsProvider.getArticles(sourcesList));
+            case "local":
+                articlesDtoRs.addAll(localNewsProvider.getArticles(sourcesList));
+            //TODO add default case
+>>>>>>> develop
         }
 
         return articlesDtoRs;
