@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Sukh on 1/13/2017.
  */
-public interface CategoryProvider {
+public interface NewsProvider {
 
     List<ArticlesDtoRs> getArticles(List<String> sourcesList);
 }
