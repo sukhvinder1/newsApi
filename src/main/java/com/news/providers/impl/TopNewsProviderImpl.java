@@ -25,15 +25,13 @@ public class TopNewsProviderImpl implements NewsProvider {
     @Override
     public List<ArticlesDtoRs> getArticles(List<String> sourcesList) {
         List<ArticlesDtoRs> response = new ArrayList<>();
+        CommonProviderHelper helper = new CommonProviderHelper();
         for(String source : sourcesList) {
             List<RomeDO> romeDOList = romeServiceProvider.getRomeDO(propertyManager.getSourcePropertyUrl(source));
             for (RomeDO romeDO : romeDOList) {
                 ArticlesDtoRs articlesDtoRs = new ArticlesDtoRs();
                 articlesDtoRs.setCategory(AppConstant.TOP);
-                articlesDtoRs.setDate(romeDO.getDate());
-                articlesDtoRs.setImageUrl(romeDO.getImageUrl());
-                articlesDtoRs.setUrl(romeDO.getUrl());
-                articlesDtoRs.setTitle(romeDO.getTitle());
+                articlesDtoRs = helper.prepareCommonRs(articlesDtoRs, romeDO);
                 response.add(articlesDtoRs);
             }
         }
