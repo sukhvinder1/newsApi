@@ -2,7 +2,7 @@ package com.news.application.facade.mapper;
 
 import com.news.application.facade.constant.AppConstant;
 import com.news.application.facade.dto.CategoriesDto;
-import com.news.application.facade.util.PropertyManager;
+import com.news.architecture.util.PropertyManager;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
 public class CategoriesMapper {
 
     @Inject
-    PropertyManager propertyManager;
+    private PropertyManager propertyManager;
 
     private List<String> techSources, topSources, sportsSources, businessSources, financeSources, entertainmentSources, localSources;
     List<CategoriesDto> categoriesDtoList;

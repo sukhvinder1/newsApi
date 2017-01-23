@@ -1,10 +1,8 @@
 package com.news.providers.impl;
 
 import com.news.application.facade.constant.AppConstant;
-import com.news.application.facade.dto.ArticlesDtoRq;
 import com.news.application.facade.dto.ArticlesDtoRs;
-import com.news.application.facade.util.PropertyManager;
-import com.news.providers.Backend.RomeServiceProvider;
+import com.news.architecture.util.PropertyManager;
 import com.news.providers.Backend.impl.RomeServiceProviderImpl;
 import com.news.providers.CategoryProvider;
 import com.news.providers.Entity.RomeDO;

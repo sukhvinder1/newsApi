@@ -29,6 +29,7 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
         for(ArticlesDtoRq articlesDtoRq : req) {
             delegatingToProvider(articlesDtoRq.getCategoryName(), articlesDtoRq.getSources());
         }
+        System.out.println("number of articles : " + articlesDtoRs.size());
         return articlesDtoRs;
     }
 

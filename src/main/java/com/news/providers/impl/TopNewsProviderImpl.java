@@ -1,9 +1,8 @@
 package com.news.providers.impl;
 
 import com.news.application.facade.constant.AppConstant;
-import com.news.application.facade.dto.ArticlesDtoRq;
 import com.news.application.facade.dto.ArticlesDtoRs;
-import com.news.application.facade.util.PropertyManager;
+import com.news.architecture.util.PropertyManager;
 import com.news.providers.Backend.RomeServiceProvider;
 import com.news.providers.CategoryProvider;
 import com.news.providers.Entity.RomeDO;
@@ -18,10 +17,10 @@ import java.util.List;
 public class TopNewsProviderImpl implements CategoryProvider {
 
     @Inject
-    RomeServiceProvider romeServiceProvider;
+    private RomeServiceProvider romeServiceProvider;
 
     @Inject
-    PropertyManager propertyManager;
+    private PropertyManager propertyManager;
 
     @Override
     public List<ArticlesDtoRs> getArticles(List<String> sourcesList) {
