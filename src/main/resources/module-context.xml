@@ -23,7 +23,7 @@
     <bean name="categoryFacade" class="com.news.application.facade.impl.CategoryFacadeImpl"/>
     <bean name="categoriesMapper" class="com.news.application.facade.mapper.CategoriesMapper"/>
     <bean name="propertyManager" class="com.news.application.facade.util.PropertyManager"/>
-
+    <bean name="sortArticles" class="com.news.application.facade.util.SortArticles" />
     <bean name="articlesFacade" class="com.news.application.facade.impl.ArticlesFacadeImpl" />
     <bean name="technologyProvider" class="com.news.providers.impl.TechnologyProviderImpl" />
     <bean name="topNewsProvider" class="com.news.providers.impl.TopNewsProviderImpl" />
