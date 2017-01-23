@@ -8,12 +8,15 @@ import com.news.providers.impl.TechnologyProviderImpl;
 import com.news.providers.impl.TopNewsProviderImpl;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
+<<<<<<< HEAD
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+=======
+import java.util.ArrayList;
+import java.util.List;
+>>>>>>> develop
 
 /**
  * Created by Sukh on 2017-01-21.
@@ -33,8 +36,12 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
 
     @Override
     public List<ArticlesDtoRs> getArticles(List<ArticlesDtoRq> req) {
+<<<<<<< HEAD
+        for (ArticlesDtoRq articlesDtoRq : req) {
+=======
         articlesDtoRs = new ArrayList<>();
         for(ArticlesDtoRq articlesDtoRq : req) {
+>>>>>>> develop
             delegatingToProvider(articlesDtoRq.getCategoryName(), articlesDtoRq.getSources());
         }
         System.out.println("number of articles : " + articlesDtoRs.size());
@@ -43,11 +50,14 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
 
     /**
      * @param category
-     * @param sourcesList
-     * this method will delegate to appropriate provider based on the category param
-     * and it will bring the list of Articles and add it to response
+     * @param sourcesList this method will delegate to appropriate provider based on the category param
+     *                    and it will bring the list of Articles and add it to response
      */
+<<<<<<< HEAD
+    private void delegatingToProvider(String category, List<String> sourcesList) {
+=======
     private List<ArticlesDtoRs> delegatingToProvider(String category, List<String> sourcesList){
+>>>>>>> develop
         switch (category) {
             case "tech":
                 articlesDtoRs.addAll(technologyProvider.getArticles(sourcesList));

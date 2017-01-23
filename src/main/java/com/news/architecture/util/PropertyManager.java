@@ -1,4 +1,4 @@
-package com.news.application.facade.util;
+package com.news.architecture.util;
 
 import com.news.architecture.Exceptions.NewsSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,9 @@ public class PropertyManager {
 
     @Autowired
     private Properties properties;
+
+    @Autowired
+    private Properties sourcesUrl;
 
     HashMap<String, String> propertiesMap = new HashMap<String, String>();
 
@@ -46,6 +49,9 @@ public class PropertyManager {
         return properties.propertyNames();
     }
 
+    public String getSourcePropertyUrl(String key) {
+        return sourcesUrl.getProperty(key);
+    }
 
 
 }

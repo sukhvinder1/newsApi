@@ -1,7 +1,7 @@
 package com.news.application.facade.mapper;
 
 import com.news.application.facade.dto.CategoriesDto;
-import com.news.application.facade.util.PropertyManager;
+import com.news.architecture.util.PropertyManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

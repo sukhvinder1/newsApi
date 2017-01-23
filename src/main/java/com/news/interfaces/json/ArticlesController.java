@@ -25,10 +25,8 @@ public class ArticlesController {
     @Inject
     private ArticlesFacade articlesFacade;
 
-
     @RequestMapping(value = "/all", method = RequestMethod.POST)
     public ResponseEntity<List<ArticlesDtoRs>> getArticles(@RequestBody List<ArticlesDtoRq> req){
-        System.out.println(req.get(0).getCategoryName());
         return new ResponseEntity<>(articlesFacade.getArticles(req), HttpStatus.OK);
     }
 
