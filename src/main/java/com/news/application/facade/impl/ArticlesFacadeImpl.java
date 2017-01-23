@@ -67,8 +67,6 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
         switch (category) {
             case "tech":
                 articlesDtoRs.addAll(technologyProvider.getArticles(sourcesList));
-                sortArticles.sortArticles(articlesDtoRs);
-                break;
             case "top":
                 articlesDtoRs.addAll(topNewsProvider.getArticles(sourcesList));
             case "business":
@@ -83,6 +81,8 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
                 articlesDtoRs.addAll(localNewsProvider.getArticles(sourcesList));
             //TODO add default case
         }
+
+        sortArticles.sortArticles(articlesDtoRs);
 
         return articlesDtoRs;
     }

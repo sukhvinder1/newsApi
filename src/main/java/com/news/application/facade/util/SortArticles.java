@@ -12,9 +12,6 @@ import java.util.List;
  */
 public class SortArticles {
     public List<ArticlesDtoRs> sortArticles(List<ArticlesDtoRs> sortArticles) {
-        List<ArticlesDtoRs> sortedArticles = new ArrayList<ArticlesDtoRs>();
-
-        System.out.println("Before sorting: " + sortArticles);
 
         Collections.sort(sortArticles, new Comparator<ArticlesDtoRs>() {
             @Override
@@ -24,8 +21,6 @@ public class SortArticles {
                 return o1.getDate().compareTo(o2.getDate());
             }
         });
-
-        System.out.println("After sorting: " + sortArticles);
 
         return sortArticles;
     }
