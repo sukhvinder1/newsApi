@@ -51,11 +51,11 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
         switch (category) {
             case "tech":
                 articlesDtoRs.addAll(technologyProvider.getArticles(sourcesList));
-                //sortArticles.sortArticles(articlesDtoRs);
+                sortArticles.sortArticles(articlesDtoRs);
                 break;
             case "top":
                 articlesDtoRs.addAll(topNewsProvider.getArticles(sourcesList));
-                //sortArticles.sortArticles(articlesDtoRs);
+                sortArticles.sortArticles(articlesDtoRs);
                 break;
             //TODO still have to add others cases
         }
