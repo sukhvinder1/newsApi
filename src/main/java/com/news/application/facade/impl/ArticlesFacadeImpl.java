@@ -67,18 +67,25 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
         switch (category) {
             case "tech":
                 articlesDtoRs.addAll(technologyProvider.getArticles(sourcesList));
+                break;
             case "top":
                 articlesDtoRs.addAll(topNewsProvider.getArticles(sourcesList));
+                break;
             case "business":
                 articlesDtoRs.addAll(businessNewsProvider.getArticles(sourcesList));
+                break;
             case "sports":
                 articlesDtoRs.addAll(sportsNewsProvider.getArticles(sourcesList));
+                break;
             case "finance":
                 articlesDtoRs.addAll(financeNewsProvider.getArticles(sourcesList));
+                break;
             case "entertainment":
                 articlesDtoRs.addAll(entertainmentNewsProvider.getArticles(sourcesList));
+                break;
             case "local":
                 articlesDtoRs.addAll(localNewsProvider.getArticles(sourcesList));
+                break;
             //TODO add default case
         }
 
