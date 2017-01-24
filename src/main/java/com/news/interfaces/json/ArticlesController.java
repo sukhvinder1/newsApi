@@ -25,6 +25,7 @@ public class ArticlesController {
     @Inject
     private ArticlesFacade articlesFacade;
 
+    //TODO add new api param here
     @RequestMapping(value = "/all", method = RequestMethod.POST)
     public ResponseEntity<List<ArticlesDtoRs>> getArticles(@RequestBody List<ArticlesDtoRq> req){
         return new ResponseEntity<>(articlesFacade.getArticles(req), HttpStatus.OK);
