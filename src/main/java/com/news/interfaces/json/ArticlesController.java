@@ -1,6 +1,7 @@
 package com.news.interfaces.json;
 
 import com.news.application.facade.ArticlesFacade;
+import com.news.application.facade.constant.AppConstant;
 import com.news.application.facade.dto.ArticlesDtoRq;
 import com.news.application.facade.dto.ArticlesDtoRs;
 import com.news.application.facade.dto.CategoriesDto;
@@ -23,7 +24,7 @@ public class ArticlesController {
     private ArticlesFacade articlesFacade;
 
     @RequestMapping(value = "/all", method = RequestMethod.POST)
-    public ResponseEntity<List<ArticlesDtoRs>> getArticles(@RequestParam(value="sort", required=false) String sort,@RequestBody List<ArticlesDtoRq> req){
+    public ResponseEntity<List<ArticlesDtoRs>> getArticles(@RequestParam(value="sort", required=false, defaultValue = AppConstant.DESCENDING) String sort,@RequestBody List<ArticlesDtoRq> req){
         return new ResponseEntity<>(articlesFacade.getArticles(sort, req), HttpStatus.OK);
     }
 
