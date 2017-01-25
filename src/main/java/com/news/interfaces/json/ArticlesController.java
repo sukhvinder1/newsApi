@@ -24,7 +24,9 @@ public class ArticlesController {
     private ArticlesFacade articlesFacade;
 
     @RequestMapping(value = "/all", method = RequestMethod.POST)
-    public ResponseEntity<List<ArticlesDtoRs>> getArticles(@RequestParam(value="sort", required=false, defaultValue = AppConstant.DESCENDING) String sort,@RequestBody List<ArticlesDtoRq> req){
+    public ResponseEntity<List<ArticlesDtoRs>> getArticles(
+            @RequestParam(value="sort", required=false, defaultValue = AppConstant.DESCENDING)
+            String sort,@RequestBody List<ArticlesDtoRq> req) {
         return new ResponseEntity<>(articlesFacade.getArticles(sort, req), HttpStatus.OK);
     }
 
