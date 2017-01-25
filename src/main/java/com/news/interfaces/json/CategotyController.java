@@ -31,9 +31,6 @@ public class CategotyController {
     @RequestMapping(value = "/error", method = RequestMethod.GET)
     public ResponseEntity<List<CategoriesDto>> getError(){
 
-
         throw new NewsSystemException("Generic Error");
-
-
     }
 }
