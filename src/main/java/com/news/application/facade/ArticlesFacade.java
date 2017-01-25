@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface ArticlesFacade {
 
-      List<ArticlesDtoRs> getArticles(List<ArticlesDtoRq> req);
+      List<ArticlesDtoRs> getArticles(String sort, List<ArticlesDtoRq> req);
 
 
 }
