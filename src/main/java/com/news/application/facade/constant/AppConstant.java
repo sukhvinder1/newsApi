@@ -12,5 +12,7 @@ public class AppConstant {
     public static final String FINANCE = "finance";
     public static final String ENTERTAINMENT = "entertainment";
     public static final String LOCAL = "local";
+    public static final String ASCENDING  = "asc";
+    public static final String DESCENDING = "des";
 
 }
