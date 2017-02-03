@@ -16,7 +16,6 @@ public class DataHub {
     private RomeServiceProviderImpl provider;
 
     private boolean isUpdating = false;
-
     ConcurrentHashMap<String, List<Sources>> mainHashMap = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, List<Sources>> tempHashMap = new ConcurrentHashMap<>();
 
@@ -24,16 +23,6 @@ public class DataHub {
         tempHashMap = provider.getAllArticles();
         isUpdating = true;
         updateMainHashMap();
-    }
-
-    private void updateMainHashMap() {
-        mainHashMap.clear();
-        setMainHashMap(tempHashMap);
-        isUpdating = false;
-    }
-
-    private void setMainHashMap(ConcurrentHashMap<String, List<Sources>> mainHashMap) {
-        this.mainHashMap = mainHashMap;
     }
 
     public List<Sources> getNewsForSource(String sourceId) {
@@ -48,5 +37,15 @@ public class DataHub {
             }
         }
         return mainHashMap.get(sourceId);
+    }
+
+    private void updateMainHashMap() {
+        mainHashMap.clear();
+        setMainHashMap(tempHashMap);
+        isUpdating = false;
+    }
+
+    private void setMainHashMap(ConcurrentHashMap<String, List<Sources>> mainHashMap) {
+        this.mainHashMap = mainHashMap;
     }
 }

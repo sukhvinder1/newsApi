@@ -1,13 +1,14 @@
 package com.news.providers.Backend;
 
-import com.news.providers.Entity.RomeDO;
+import com.news.application.facade.dto.Sources;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Sukh on 2017-01-21.
  */
 public interface RomeServiceProvider {
 
-    List<RomeDO> getRomeDO(String url);
+    ConcurrentHashMap<String, List<Sources>> getAllArticles();
 }

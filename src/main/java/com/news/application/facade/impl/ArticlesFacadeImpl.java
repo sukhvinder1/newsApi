@@ -4,7 +4,6 @@ import com.news.application.facade.ArticlesFacade;
 import com.news.application.facade.dto.ArticlesDtoRq;
 import com.news.application.facade.dto.ArticlesDtoRs;
 import com.news.application.facade.dto.Categories;
-import com.news.application.facade.util.SortArticles;
 import com.news.providers.impl.CommonNewsProvider;
 
 import javax.inject.Inject;
@@ -18,10 +17,6 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
 
     @Inject
     private CommonNewsProvider commonNewsProvider;
-
-    @Inject
-    private SortArticles sortArticles;
-
 
     @Override
     public ArticlesDtoRs getArticles(String sort, List<ArticlesDtoRq> req) {

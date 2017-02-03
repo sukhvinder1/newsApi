@@ -26,10 +26,6 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
     private PropertyManager propertyManager;
 
     @Override
-    public List<RomeDO> getRomeDO(String url) {
-        return null;//prepareDO(getFeed(url));
-    }
-
     public ConcurrentHashMap<String, List<Sources>> getAllArticles() {
 
         ConcurrentHashMap<String, List<Sources>> allArticlesMap = new ConcurrentHashMap<>();
@@ -81,9 +77,5 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         }
 
         return sourcesArrayList;
-    }
-
-    public void getSourceArticles() {
-
     }
 }

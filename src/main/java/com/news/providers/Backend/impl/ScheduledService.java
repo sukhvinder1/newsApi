@@ -1,5 +1,6 @@
 package com.news.providers.Backend.impl;
 
+import com.news.application.facade.constant.AppConstant;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.inject.Inject;
@@ -13,10 +14,7 @@ public class ScheduledService {
     @Inject
     private DataHub dataHub;
 
-    // one min
-    final long TIME = 300000;
-
-    @Scheduled(fixedDelay = TIME)
+    @Scheduled(fixedDelay = AppConstant.TIME)
     public void demoServiceMethod()
     {
         System.out.println("Before method - Current time is :: "+ new Date());

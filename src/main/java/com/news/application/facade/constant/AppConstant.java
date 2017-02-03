@@ -15,4 +15,7 @@ public class AppConstant {
     public static final String ASCENDING  = "asc";
     public static final String DESCENDING = "des";
 
+
+    public static final long TIME = 300000;
+
 }
