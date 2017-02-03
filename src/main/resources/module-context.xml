@@ -26,13 +26,7 @@
 
     <bean name="sortArticles" class="com.news.application.facade.util.SortArticles" />
     <bean name="articlesFacade" class="com.news.application.facade.impl.ArticlesFacadeImpl" />
-    <bean name="technologyProvider" class="com.news.providers.impl.TechnologyProviderImpl" />
-    <bean name="topNewsProvider" class="com.news.providers.impl.TopNewsProviderImpl" />
-    <bean name="sportsNewsProvider" class="com.news.providers.impl.SportsNewsProviderImpl" />
-    <bean name="businessNewsProvider" class="com.news.providers.impl.BusinessNewsProviderImpl" />
-    <bean name="localNewsProvider" class="com.news.providers.impl.LocalNewsProviderImpl" />
-    <bean name="financeNewsProvider" class="com.news.providers.impl.FinanceNewsProviderImpl" />
-    <bean name="entertainmentNewsProvider" class="com.news.providers.impl.EntertainmentNewsProviderImpl" />
+    <bean name="technologyProvider" class="com.news.providers.impl.CommonNewsProvider" />
 
     <bean name="romeServiceProvider" class="com.news.providers.Backend.impl.RomeServiceProviderImpl" />
 

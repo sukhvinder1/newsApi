@@ -62,4 +62,8 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
 
         return romeDOList;
     }
+
+    public void getArticles() {
+        //return null;
+    }
 }

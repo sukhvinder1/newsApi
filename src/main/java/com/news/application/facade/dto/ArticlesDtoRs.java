@@ -1,56 +1,28 @@
 package com.news.application.facade.dto;
 
-import java.util.Date;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Sukh on 2017-01-21.
  */
 public class ArticlesDtoRs {
+    ConcurrentHashMap<String, Categories> categories;
 
-    private String category;
-    private String url;
-    private String imageUrl;
-    private String title;
-    private Date date;
-
-
-    public String getCategory() {
-        return category;
+    public ConcurrentHashMap<String, Categories> getCategories() {
+        return categories;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategories(ConcurrentHashMap<String, Categories> categories) {
+        this.categories = categories;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    @Override
+    public String toString() {
+        return "ArticlesDtoRs{" +
+                "categories=" + categories +
+                '}';
     }
 }
+
+
+
