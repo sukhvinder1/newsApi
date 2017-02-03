@@ -25,20 +25,8 @@ public class CommonNewsProvider implements NewsProvider {
         ConcurrentHashMap<String, List<Sources>> sourcesMap = new ConcurrentHashMap<>();
         for(String source : sourcesList) {
             sourcesMap.put(source, dataHub.getNewsForSource(source));
-            //sourcesMap.put(source, mockSourceList());
         }
         categories.setSources(sourcesMap);
         return categories;
-    }
-
-    private List<Sources> mockSourceList() {
-        List<Sources> sourcesList = new ArrayList<>();
-        Sources sources = new Sources();
-        sources.setTitle("NEWS TITTLE");
-        sources.setUrl("URL");
-        sources.setImageUrl("IMAGE URL");
-        sources.setDate(null);
-        sourcesList.add(sources);
-        return sourcesList;
     }
 }
