@@ -34,5 +34,6 @@
 
     <bean name="romeServiceProvider" class="com.news.providers.Backend.impl.RomeServiceProviderImpl" />
     <bean id="demoServiceBasicUsageFixedDelay" class="com.news.providers.Backend.impl.ScheduledService"/>
+    <bean id="dataHub" class="com.news.providers.Backend.impl.DataHub"/>
 
 </beans>

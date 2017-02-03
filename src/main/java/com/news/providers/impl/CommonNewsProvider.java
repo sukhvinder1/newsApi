@@ -2,8 +2,10 @@ package com.news.providers.impl;
 
 import com.news.application.facade.dto.Categories;
 import com.news.application.facade.dto.Sources;
+import com.news.providers.Backend.impl.DataHub;
 import com.news.providers.NewsProvider;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,16 +15,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CommonNewsProvider implements NewsProvider {
 
+    @Inject
+    private DataHub dataHub;
+
     @Override
     public Categories getArticles(List<String> sourcesList) {
 
         Categories categories = new Categories();
         ConcurrentHashMap<String, List<Sources>> sourcesMap = new ConcurrentHashMap<>();
         for(String source : sourcesList) {
-//            here we will get articles from cache or bigHashmap, key will be the source name
-//            sourcesMap.put(source, backend.getSourceArticle(source));
-            sourcesMap.put(source, mockSourceList());
-
+            sourcesMap.put(source, dataHub.getNewsForSource(source));
+            //sourcesMap.put(source, mockSourceList());
         }
         categories.setSources(sourcesMap);
         return categories;

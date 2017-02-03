@@ -2,6 +2,7 @@ package com.news.providers.Backend.impl;
 
 import org.springframework.scheduling.annotation.Scheduled;
 
+import javax.inject.Inject;
 import java.util.Date;
 
 /**
@@ -9,12 +10,17 @@ import java.util.Date;
  */
 public class ScheduledService {
 
+    @Inject
+    private DataHub dataHub;
+
     // one min
-    final long TIME = 60000;
+    final long TIME = 300000;
 
     @Scheduled(fixedDelay = TIME)
     public void demoServiceMethod()
     {
-        System.out.println("Method executed at every 1 min. Current time is :: "+ new Date());
+        System.out.println("Before method - Current time is :: "+ new Date());
+        dataHub.getLatestNews();
+        System.out.println(" After method - Current time is :: "+ new Date());
     }
 }
