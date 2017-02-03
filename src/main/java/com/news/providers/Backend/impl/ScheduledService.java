@@ -9,7 +9,10 @@ import java.util.Date;
  */
 public class ScheduledService {
 
-    @Scheduled(fixedDelay = 60000)
+    // one min
+    final long TIME = 60000;
+
+    @Scheduled(fixedDelay = TIME)
     public void demoServiceMethod()
     {
         System.out.println("Method executed at every 1 min. Current time is :: "+ new Date());
