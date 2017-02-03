@@ -3,6 +3,7 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:task="http://www.springframework.org/schema/task"
 
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
@@ -12,10 +13,13 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
         http://www.springframework.org/schema/util
-        http://www.springframework.org/schema/util/spring-util.xsd">
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
     <context:component-scan base-package="com.news.*" />
     <mvc:annotation-driven />
+    <task:annotation-driven />
     <context:annotation-config/>
     <util:properties id="properties" location="classpath:sources.properties" />
     <util:properties id="sourcesUrl" location="classpath:sources_url_mappings.properties" />
@@ -29,5 +33,6 @@
     <bean name="technologyProvider" class="com.news.providers.impl.CommonNewsProvider" />
 
     <bean name="romeServiceProvider" class="com.news.providers.Backend.impl.RomeServiceProviderImpl" />
+    <bean id="demoServiceBasicUsageFixedDelay" class="com.news.providers.Backend.impl.ScheduledService"/>
 
 </beans>
