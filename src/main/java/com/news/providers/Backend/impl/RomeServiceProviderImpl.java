@@ -71,10 +71,11 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
 
         List<SyndEntry> items = feed.getEntries();
         if (items != null) {
+            //TODO date logic still pending
             for (SyndEntry item : items) {
                 Sources sources = new Sources();
-                sources.setTitle(item.getTitle().toString());
-                sources.setUrl(item.getLink().toString());
+                sources.setTitle(item.getTitle());
+                sources.setUrl(item.getLink());
                 sources.setImageUrl("null");
                 sources.setDate(item.getPublishedDate());
                 sourcesArrayList.add(sources);

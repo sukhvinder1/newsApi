@@ -35,6 +35,7 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
                 length += categoriesMap.get(c).getSources().get(s).size();
             }
         }
+
         System.out.println("Number of article : " + length);
 
         articlesDtoRs.setCategories(categoriesMap);
