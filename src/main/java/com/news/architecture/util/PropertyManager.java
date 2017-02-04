@@ -62,6 +62,10 @@ public class PropertyManager {
             map.put(key, sourcesUrl.getProperty(key));
         }
 
+        if (ValidationUtil.isMapNullOrEmpty(map)) {
+            throw new NewsSystemException("Url hashMap is null");
+        }
+
         return map;
     }
 

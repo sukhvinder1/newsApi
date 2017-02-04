@@ -4,6 +4,7 @@ import com.news.application.facade.ArticlesFacade;
 import com.news.application.facade.dto.ArticlesDtoRq;
 import com.news.application.facade.dto.ArticlesDtoRs;
 import com.news.application.facade.dto.Categories;
+import com.news.application.facade.dto.Sources;
 import com.news.providers.impl.CommonNewsProvider;
 
 import javax.inject.Inject;
@@ -27,6 +28,15 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
         for(ArticlesDtoRq articlesDtoRq : req) {
             categoriesMap.put(articlesDtoRq.getCategoryName(), delegatingToProvider(articlesDtoRq));
         }
+
+        int length = 0;
+        for (String c : categoriesMap.keySet()) {
+            for (String s : categoriesMap.get(c).getSources().keySet()) {
+                length += categoriesMap.get(c).getSources().get(s).size();
+            }
+        }
+        System.out.println("Number of article : " + length);
+
         articlesDtoRs.setCategories(categoriesMap);
         return articlesDtoRs;
     }

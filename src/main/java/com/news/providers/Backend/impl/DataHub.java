@@ -2,6 +2,7 @@ package com.news.providers.Backend.impl;
 
 import com.news.application.facade.dto.Sources;
 import com.news.architecture.Exceptions.NewsSystemException;
+import com.news.architecture.util.ValidationUtil;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -21,6 +22,9 @@ public class DataHub {
 
     public void getLatestNews() {
         tempHashMap = provider.getAllArticles();
+        if (ValidationUtil.isMapNullOrEmpty(tempHashMap)) {
+            throw new NewsSystemException("HashMap from from rome provider");
+        }
         isUpdating = true;
         updateMainHashMap();
     }
@@ -32,11 +36,15 @@ public class DataHub {
                 getNewsForSource(sourceId);
             } catch (InterruptedException e){
                 throw new NewsSystemException("Thread InterruptedException");
-            }finally {
-
             }
         }
-        return mainHashMap.get(sourceId);
+
+        List<Sources> sources = mainHashMap.get(sourceId);
+        if (ValidationUtil.isCollectionNullOrEmpty(sources)) {
+            throw new NewsSystemException("Sources are null at DataHub");
+        }
+
+        return sources;
     }
 
     private void updateMainHashMap() {

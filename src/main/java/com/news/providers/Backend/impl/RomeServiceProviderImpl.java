@@ -3,6 +3,7 @@ package com.news.providers.Backend.impl;
 import com.news.application.facade.dto.Sources;
 import com.news.architecture.Exceptions.NewsSystemException;
 import com.news.architecture.util.PropertyManager;
+import com.news.architecture.util.ValidationUtil;
 import com.news.providers.Backend.RomeServiceProvider;
 import com.news.providers.Entity.RomeDO;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -54,6 +55,10 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
             throw new NewsSystemException(ex.getMessage());
         }
 
+        if (feed == null) {
+            throw new NewsSystemException("SyndFeed is null at Rome Provider");
+        }
+
         return feed;
     }
 
@@ -74,6 +79,10 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
                 sources.setDate(item.getPublishedDate());
                 sourcesArrayList.add(sources);
             }
+        }
+
+        if (ValidationUtil.isCollectionNullOrEmpty(sourcesArrayList)) {
+            throw new NewsSystemException("List of sources are empty at Rome provider");
         }
 
         return sourcesArrayList;
