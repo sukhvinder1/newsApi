@@ -1,6 +1,7 @@
 package com.news.providers.Backend.impl;
 
 import com.news.application.facade.constant.AppConstant;
+import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.inject.Inject;
@@ -14,11 +15,13 @@ public class ScheduledService {
     @Inject
     private DataHub dataHub;
 
+    Logger logger = Logger.getLogger(ScheduledService.class);
+
     @Scheduled(fixedDelay = AppConstant.TIME_TEN_MINS)
     public void demoServiceMethod()
     {
-        System.out.println("Before method - Current time is :: "+ new Date());
+        logger.info("Before getting latest news - Current time is :: "+ new Date());
         dataHub.getLatestNews();
-        System.out.println(" After method - Current time is :: "+ new Date());
+        logger.info(" After getting latest news - Current time is :: "+ new Date());
     }
 }
