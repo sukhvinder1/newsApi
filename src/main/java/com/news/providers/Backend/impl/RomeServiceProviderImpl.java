@@ -10,6 +10,7 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
+import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
 import java.net.URL;
@@ -25,6 +26,8 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
 
     @Inject
     private PropertyManager propertyManager;
+
+    Logger logger = Logger.getLogger(RomeServiceProviderImpl.class);
 
     @Override
     public ConcurrentHashMap<String, List<Sources>> getAllArticles() {
@@ -52,6 +55,7 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
             feed = input.build(new XmlReader(feedUrl));
         } catch (Exception ex) {
             ex.printStackTrace();
+            logger.error(ex);
             throw new NewsSystemException(ex.getMessage());
         }
 

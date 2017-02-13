@@ -3,6 +3,7 @@ package com.news.providers.Backend.impl;
 import com.news.application.facade.dto.Sources;
 import com.news.architecture.Exceptions.NewsSystemException;
 import com.news.architecture.util.ValidationUtil;
+import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -15,6 +16,8 @@ public class DataHub {
 
     @Inject
     private RomeServiceProviderImpl provider;
+
+    Logger logger = Logger.getLogger(DataHub.class);
 
     private boolean isUpdating = false;
     ConcurrentHashMap<String, List<Sources>> mainHashMap = new ConcurrentHashMap<>();
@@ -36,6 +39,7 @@ public class DataHub {
                 wait(1000);
                 getNewsForSource(sourceId);
             } catch (InterruptedException e){
+                logger.error(e);
                 throw new NewsSystemException("Thread InterruptedException");
             }
         }
