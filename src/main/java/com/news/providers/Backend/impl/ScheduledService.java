@@ -20,8 +20,8 @@ public class ScheduledService {
     @Scheduled(fixedDelay = AppConstant.TIME_TEN_MINS)
     public void demoServiceMethod()
     {
-        logger.info("Before getting latest news - Current time is :: "+ new Date());
+        logger.info("Before getting latest news");
         dataHub.getLatestNews();
-        logger.info(" After getting latest news - Current time is :: "+ new Date());
+        logger.info(" After getting latest news");
     }
 }
