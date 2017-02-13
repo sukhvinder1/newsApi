@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by sinsukhv on 2017-01-30.
  */
+@Deprecated
 public class Categories {
 
     ConcurrentHashMap<String, List<Sources>> sources;

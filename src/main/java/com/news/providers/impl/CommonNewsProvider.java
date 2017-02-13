@@ -21,24 +21,18 @@ public class CommonNewsProvider implements NewsProvider {
     private DataHub dataHub;
 
     @Override
-    public Categories getArticles(List<String> sourcesList) {
+    public List<Sources> getArticles(List<String> sourcesRqList) {
 
-        Categories categories = new Categories();
-        ConcurrentHashMap<String, List<Sources>> sourcesMap = new ConcurrentHashMap<>();
+        List<Sources> sourcesRsList = new ArrayList<>();
 
-        for(String source : sourcesList) {
-            List<Sources> sources = dataHub.getNewsForSource(source);
-            if (ValidationUtil.isCollectionNullOrEmpty(sources)) {
-                throw new NewsSystemException("source list is null at provider");
-            }
-            sourcesMap.put(source, sources);
+        for(String source : sourcesRqList) {
+            sourcesRsList.addAll(dataHub.getNewsForSource(source));
         }
 
-        if (ValidationUtil.isMapNullOrEmpty(sourcesMap)) {
+        if (ValidationUtil.isCollectionNullOrEmpty(sourcesRsList)) {
             throw new NewsSystemException("Null map at provider");
         }
 
-        categories.setSources(sourcesMap);
-        return categories;
+        return sourcesRsList;
     }
 }

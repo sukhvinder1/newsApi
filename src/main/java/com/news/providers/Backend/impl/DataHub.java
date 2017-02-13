@@ -30,9 +30,10 @@ public class DataHub {
     }
 
     public List<Sources> getNewsForSource(String sourceId) {
+        // TODO use intances
         if (isUpdating) {
             try {
-                wait(10000);
+                wait(1000);
                 getNewsForSource(sourceId);
             } catch (InterruptedException e){
                 throw new NewsSystemException("Thread InterruptedException");

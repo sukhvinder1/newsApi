@@ -1,6 +1,7 @@
 package com.news.providers;
 
 import com.news.application.facade.dto.Categories;
+import com.news.application.facade.dto.Sources;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ import java.util.List;
  */
 public interface NewsProvider {
 
-    Categories getArticles(List<String> sourcesList);
+    List<Sources> getArticles(List<String> sourcesList);
 }

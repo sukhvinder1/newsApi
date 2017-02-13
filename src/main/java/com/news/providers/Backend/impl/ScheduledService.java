@@ -14,7 +14,7 @@ public class ScheduledService {
     @Inject
     private DataHub dataHub;
 
-    @Scheduled(fixedDelay = AppConstant.TIME_ONE_MIN)
+    @Scheduled(fixedDelay = AppConstant.TIME_TEN_MINS)
     public void demoServiceMethod()
     {
         System.out.println("Before method - Current time is :: "+ new Date());
