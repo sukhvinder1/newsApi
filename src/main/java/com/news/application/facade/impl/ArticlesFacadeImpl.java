@@ -4,7 +4,9 @@ import com.news.application.facade.ArticlesFacade;
 import com.news.application.facade.dto.ArticlesDtoRq;
 import com.news.application.facade.dto.ArticlesDtoRs;
 import com.news.application.facade.dto.Sources;
+import com.news.application.facade.util.SortArticles;
 import com.news.providers.impl.CommonNewsProvider;
+import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -18,6 +20,11 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
     @Inject
     private CommonNewsProvider commonNewsProvider;
 
+    @Inject
+    private SortArticles sortArticles;
+
+    Logger logger = Logger.getLogger(ArticlesFacadeImpl.class);
+
     @Override
     public ArticlesDtoRs getArticles(String sort, List<ArticlesDtoRq> req) {
 
@@ -25,7 +32,7 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
         ConcurrentHashMap<String, List<Sources>> categoriesMap = new ConcurrentHashMap<>();
 
         for(ArticlesDtoRq articlesDtoRq : req) {
-            categoriesMap.put(articlesDtoRq.getCategoryName(), delegatingToProvider(articlesDtoRq));
+            categoriesMap.put(articlesDtoRq.getCategoryName(), delegatingToProvider(articlesDtoRq, sort));
         }
 
         articlesDtoRs.setSources(categoriesMap);
@@ -35,15 +42,16 @@ public class ArticlesFacadeImpl implements ArticlesFacade {
             length += categoriesMap.get(string).size();
         }
 
-        System.out.println("Number of article : " + length);
+        logger.info("Number of articles returned to FE : " + length);
 
         return articlesDtoRs;
     }
 
 
-    private List<Sources> delegatingToProvider(ArticlesDtoRq articlesDtoRq) {
+    private List<Sources> delegatingToProvider(ArticlesDtoRq req, String sort) {
 
-        return commonNewsProvider.getArticles(articlesDtoRq.getSources());
-
+        return sortArticles.sortArticles(
+                commonNewsProvider.getArticles(req.getSources()),
+                sort);
     }
 }

@@ -25,9 +25,19 @@ public class DataHub {
 
     public void getLatestNews() {
         tempHashMap = provider.getAllArticles();
+
         if (ValidationUtil.isMapNullOrEmpty(tempHashMap)) {
-            throw new NewsSystemException("HashMap from from rome provider");
+            logger.error("HashMap is coming null from the provider");
+            throw new NewsSystemException("HashMap null from rome provider");
         }
+
+        int length = 0;
+        for (String string : tempHashMap.keySet()) {
+            length += tempHashMap.get(string).size();
+        }
+
+        logger.info("Number of articles DataHub : " + length);
+
         isUpdating = true;
         updateMainHashMap();
     }
