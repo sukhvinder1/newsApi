@@ -13,6 +13,7 @@ import com.sun.syndication.io.XmlReader;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
+import org.jdom.Element;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,19 +78,27 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         if (items != null) {
             //TODO date logic still pending
             for (SyndEntry item : items) {
-                Sources sources = new Sources();
-                sources.setTitle(item.getTitle());
-                sources.setUrl(item.getLink());
-                sources.setImageUrl("null");
-                sources.setDate(item.getPublishedDate());
-                sourcesArrayList.add(sources);
+                List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
+                String imgURL = null;
+                for (Element foreignMarkup : foreignMarkups) {
+                    if (!(foreignMarkup.getAttribute("url") == null)) {
+                        imgURL = foreignMarkup.getAttribute("url").getValue();
+                        //read width and height
+                    }
+                }
+                    Sources sources = new Sources();
+                    sources.setTitle(item.getTitle());
+                    sources.setUrl(item.getLink());
+                    sources.setImageUrl(imgURL);
+                    sources.setDate(item.getPublishedDate());
+                    sourcesArrayList.add(sources);
+                }
             }
-        }
 
-        if (ValidationUtil.isCollectionNullOrEmpty(sourcesArrayList)) {
-            throw new NewsSystemException("List of sources are empty at Rome provider");
-        }
-
+            if (ValidationUtil.isCollectionNullOrEmpty(sourcesArrayList)) {
+                throw new NewsSystemException("List of sources are empty at Rome provider");
+            }
         return sourcesArrayList;
+        }
+
     }
-}
