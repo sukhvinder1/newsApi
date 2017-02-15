@@ -6,6 +6,7 @@ import com.news.architecture.util.PropertyManager;
 import com.news.architecture.util.ValidationUtil;
 import com.news.providers.Backend.RomeServiceProvider;
 import com.news.providers.Entity.RomeDO;
+import com.sun.syndication.feed.synd.SyndEnclosure;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
@@ -84,6 +85,13 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
                     if (!(foreignMarkup.getAttribute("url") == null)) {
                         imgURL = foreignMarkup.getAttribute("url").getValue();
                         //read width and height
+                    }
+                }
+
+                List<SyndEnclosure> encls = item.getEnclosures();
+                if(!encls.isEmpty()){
+                    for(SyndEnclosure e : encls){
+                        imgURL = e.getUrl().toString();
                     }
                 }
                     Sources sources = new Sources();
