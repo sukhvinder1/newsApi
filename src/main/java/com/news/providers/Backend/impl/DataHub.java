@@ -43,7 +43,6 @@ public class DataHub {
     }
 
     public List<Sources> getNewsForSource(String sourceId) {
-        // TODO use intances
         if (isUpdating) {
             try {
                 wait(1000);

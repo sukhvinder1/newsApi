@@ -14,7 +14,9 @@ import com.sun.syndication.io.XmlReader;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
+
 import org.jdom.Element;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,32 +83,40 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
             for (SyndEntry item : items) {
                 List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
                 String imgURL = null;
+
+                if (ValidationUtil.isCollectionNullOrEmpty(foreignMarkups)) {
+                    logger.error("Foreign Markup is null or empty");
+                }
+
                 for (Element foreignMarkup : foreignMarkups) {
                     if (!(foreignMarkup.getAttribute("url") == null)) {
                         imgURL = foreignMarkup.getAttribute("url").getValue();
-                        //read width and height
                     }
                 }
 
                 List<SyndEnclosure> encls = item.getEnclosures();
-                if(!encls.isEmpty()){
-                    for(SyndEnclosure e : encls){
+                if (!encls.isEmpty()) {
+                    for (SyndEnclosure e : encls) {
                         imgURL = e.getUrl().toString();
                     }
                 }
-                    Sources sources = new Sources();
-                    sources.setTitle(item.getTitle());
-                    sources.setUrl(item.getLink());
-                    sources.setImageUrl(imgURL);
-                    sources.setDate(item.getPublishedDate());
-                    sourcesArrayList.add(sources);
-                }
-            }
 
-            if (ValidationUtil.isCollectionNullOrEmpty(sourcesArrayList)) {
-                throw new NewsSystemException("List of sources are empty at Rome provider");
+                Sources sources = new Sources();
+                sources.setTitle(item.getTitle());
+                sources.setUrl(item.getLink());
+                sources.setImageUrl(imgURL);
+                sources.setDate(item.getPublishedDate());
+                sourcesArrayList.add(sources);
             }
-        return sourcesArrayList;
         }
 
+        if (ValidationUtil.isCollectionNullOrEmpty(sourcesArrayList)) {
+            String message = "List of sources are empty at Rome provider";
+            logger.error(message);
+            throw new NewsSystemException(message);
+        }
+
+        return sourcesArrayList;
     }
+
+}

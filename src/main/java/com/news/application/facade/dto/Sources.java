@@ -3,7 +3,7 @@ package com.news.application.facade.dto;
 import java.util.Date;
 
 /**
- * Created by sinsukhv on 2017-01-30.
+ * Created by Sukh on 2017-01-30.
  */
 public class Sources {
 
