@@ -49,9 +49,24 @@ public class PropertyManager {
         return properties.propertyNames();
     }
 
-    public String getSourcePropertyUrl(String key) {
-        return sourcesUrl.getProperty(key);
+    private Enumeration getSourceUrlNames(){
+        return sourcesUrl.propertyNames();
     }
 
+    public HashMap<String, String> getUrlHashMap() {
+        HashMap<String, String> map = new HashMap<>();
+        Enumeration e = getSourceUrlNames();
+        while (e.hasMoreElements()) {
+            //getting the key
+            String key = (String) e.nextElement();
+            map.put(key, sourcesUrl.getProperty(key));
+        }
+
+        if (ValidationUtil.isMapNullOrEmpty(map)) {
+            throw new NewsSystemException("Url hashMap is null");
+        }
+
+        return map;
+    }
 
 }

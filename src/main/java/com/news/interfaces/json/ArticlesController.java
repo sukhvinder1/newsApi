@@ -4,8 +4,6 @@ import com.news.application.facade.ArticlesFacade;
 import com.news.application.facade.constant.AppConstant;
 import com.news.application.facade.dto.ArticlesDtoRq;
 import com.news.application.facade.dto.ArticlesDtoRs;
-import com.news.application.facade.dto.CategoriesDto;
-import com.news.architecture.Exceptions.NewsSystemException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +22,7 @@ public class ArticlesController {
     private ArticlesFacade articlesFacade;
 
     @RequestMapping(value = "/all", method = RequestMethod.POST)
-    public ResponseEntity<List<ArticlesDtoRs>> getArticles(
+    public ResponseEntity<ArticlesDtoRs> getArticles(
             @RequestParam(value="sort", required=false, defaultValue = AppConstant.DESCENDING)
             String sort,@RequestBody List<ArticlesDtoRq> req) {
         return new ResponseEntity<>(articlesFacade.getArticles(sort, req), HttpStatus.OK);

@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Created by Sukh on 2017-01-21.
+ * Created by sinsukhv on 2017-01-30.
  */
-public class ArticlesDtoRs {
+@Deprecated
+public class Categories {
 
-    private ConcurrentHashMap<String, List<Sources>> sources;
+    ConcurrentHashMap<String, List<Sources>> sources;
 
     public ConcurrentHashMap<String, List<Sources>> getSources() {
         return sources;
@@ -18,6 +19,4 @@ public class ArticlesDtoRs {
         this.sources = sources;
     }
 }
-
-
 
