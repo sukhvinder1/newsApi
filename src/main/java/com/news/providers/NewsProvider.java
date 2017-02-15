@@ -1,8 +1,7 @@
 package com.news.providers;
 
-import com.news.application.facade.dto.ArticlesDtoRq;
-import com.news.application.facade.dto.ArticlesDtoRs;
-import com.news.application.facade.dto.CategoriesDto;
+import com.news.application.facade.dto.Categories;
+import com.news.application.facade.dto.Sources;
 
 import java.util.List;
 
@@ -11,5 +10,5 @@ import java.util.List;
  */
 public interface NewsProvider {
 
-    List<ArticlesDtoRs> getArticles(List<String> sourcesList);
+    List<Sources> getArticles(List<String> sourcesList);
 }
