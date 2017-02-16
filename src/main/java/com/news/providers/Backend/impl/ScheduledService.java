@@ -17,7 +17,7 @@ public class ScheduledService {
 
     Logger logger = Logger.getLogger(ScheduledService.class);
 
-//    @Scheduled(fixedDelay = AppConstant.TIME_TEN_MINS)
+    @Scheduled(fixedDelay = AppConstant.TIME_TEN_MINS)
     public void demoServiceMethod()
     {
         logger.info("Before getting latest news");
