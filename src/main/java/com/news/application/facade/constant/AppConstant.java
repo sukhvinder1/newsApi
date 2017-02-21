@@ -15,6 +15,9 @@ public class AppConstant {
     public static final String ASCENDING  = "asc";
     public static final String DESCENDING = "des";
 
+    //times of india domain
+    public static final String TIMESOFINDIADOMAIN = "http://timesofindia.indiatimes.com/photo/";
+
 
     public static final long TIME_FIVE_MINS = 300000;
     public static final long TIME_TEN_MINS = 600000;

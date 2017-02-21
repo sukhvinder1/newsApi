@@ -1,5 +1,6 @@
 package com.news.providers.Backend.impl;
 
+import com.news.application.facade.constant.AppConstant;
 import com.news.application.facade.dto.Sources;
 import com.news.architecture.Exceptions.NewsSystemException;
 import com.news.architecture.util.PropertyManager;
@@ -86,7 +87,9 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
 
                     imgURL = getImageFromContent(item.getContents().get(0).toString());
 
-                } else {
+                } else if(key.equalsIgnoreCase("timesOfIndia")){
+                    imgURL = getTimesOfIndiaImage(item.getLink());
+                }else {
 
                     List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
 
@@ -129,6 +132,16 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         int endIndex = content.indexOf('"', startIndex);
         String s = content.substring(startIndex, endIndex);
         return s;
+    }
+
+    public String getTimesOfIndiaImage(String articleUrl){
+
+        String str = articleUrl;
+        int index = str.lastIndexOf("/");
+        String articleId=(str.substring(index +1));
+        String imageURL = AppConstant.TIMESOFINDIADOMAIN + articleId;
+        return imageURL;
+
     }
 
 }
