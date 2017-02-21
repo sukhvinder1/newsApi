@@ -5,7 +5,6 @@ import com.news.architecture.Exceptions.NewsSystemException;
 import com.news.architecture.util.PropertyManager;
 import com.news.architecture.util.ValidationUtil;
 import com.news.providers.Backend.RomeServiceProvider;
-import com.news.providers.Entity.RomeDO;
 import com.sun.syndication.feed.synd.SyndEnclosure;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
@@ -85,7 +84,7 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
                 String imgURL = null;
                 if (key.equalsIgnoreCase("theVerge") || key.equalsIgnoreCase("technewsworld")) {
 
-                    imgURL = getVergeImage(item.getContents().get(0).toString());
+                    imgURL = getImageFromContent(item.getContents().get(0).toString());
 
                 } else {
 
@@ -124,7 +123,7 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         return sourcesArrayList;
     }
 
-    public String getVergeImage(String content) {
+    public String getImageFromContent(String content) {
         int srcIndex = content.indexOf("src=");
         int startIndex = content.indexOf("h", srcIndex);
         int endIndex = content.indexOf('"', startIndex);
