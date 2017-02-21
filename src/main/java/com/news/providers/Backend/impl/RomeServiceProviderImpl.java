@@ -83,7 +83,7 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
             for (SyndEntry item : items) {
 
                 String imgURL = null;
-                if (key.equalsIgnoreCase("theVerge")) {
+                if (key.equalsIgnoreCase("theVerge") || key.equalsIgnoreCase("technewsworld")) {
 
                     imgURL = getVergeImage(item.getContents().get(0).toString());
 
