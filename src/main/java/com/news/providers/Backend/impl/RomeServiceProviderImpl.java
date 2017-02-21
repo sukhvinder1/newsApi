@@ -40,7 +40,7 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         HashMap<String, String> urlMap = propertyManager.getUrlHashMap();
 
         for (String urlKey : urlMap.keySet()) {
-            allArticlesMap.put(urlKey, prepareDO(getFeed(urlMap.get(urlKey))));
+            allArticlesMap.put(urlKey, prepareDO(getFeed(urlMap.get(urlKey)), urlKey));
         }
 
         return allArticlesMap;
@@ -70,7 +70,7 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         return feed;
     }
 
-    private List<Sources> prepareDO(SyndFeed feed) {
+    private List<Sources> prepareDO(SyndFeed feed, String key) {
         List<Sources> sourcesArrayList = new ArrayList<>();
 
         if (feed == null) {
@@ -81,23 +81,28 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         if (items != null) {
             //TODO date logic still pending
             for (SyndEntry item : items) {
-                List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
+
                 String imgURL = null;
+                if (key.equalsIgnoreCase("theVerge")) {
 
-                if (ValidationUtil.isCollectionNullOrEmpty(foreignMarkups)) {
-                    logger.error("Foreign Markup is null or empty");
-                }
+                    imgURL = getVergeImage(item.getContents().get(0).toString());
 
-                for (Element foreignMarkup : foreignMarkups) {
-                    if (!(foreignMarkup.getAttribute("url") == null)) {
-                        imgURL = foreignMarkup.getAttribute("url").getValue();
+                } else {
+
+                    List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
+
+                    for (Element foreignMarkup : foreignMarkups) {
+                        if (!(foreignMarkup.getAttribute("url") == null)) {
+                            imgURL = foreignMarkup.getAttribute("url").getValue();
+                        }
                     }
-                }
-
-                List<SyndEnclosure> encls = item.getEnclosures();
-                if (!encls.isEmpty()) {
-                    for (SyndEnclosure e : encls) {
-                        imgURL = e.getUrl().toString();
+                    if (imgURL == null) {
+                        List<SyndEnclosure> encls = item.getEnclosures();
+                        if (!encls.isEmpty()) {
+                            for (SyndEnclosure e : encls) {
+                                imgURL = e.getUrl().toString();
+                            }
+                        }
                     }
                 }
 
@@ -117,6 +122,14 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         }
 
         return sourcesArrayList;
+    }
+
+    public String getVergeImage(String content) {
+        int srcIndex = content.indexOf("src=");
+        int startIndex = content.indexOf("h", srcIndex);
+        int endIndex = content.indexOf('"', startIndex);
+        String s = content.substring(startIndex, endIndex);
+        return s;
     }
 
 }
