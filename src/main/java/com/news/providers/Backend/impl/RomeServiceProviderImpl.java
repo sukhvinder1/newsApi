@@ -86,10 +86,10 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
                 if (key.equalsIgnoreCase("theVerge") || key.equalsIgnoreCase("technewsworld")) {
 
                     imgURL = getImageFromContent(item.getContents().get(0).toString());
+                } else if(key.equalsIgnoreCase("timesOfIndia")) {
 
-                } else if(key.equalsIgnoreCase("timesOfIndia")){
                     imgURL = getTimesOfIndiaImage(item.getLink());
-                }else {
+                } else {
 
                     List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
 
