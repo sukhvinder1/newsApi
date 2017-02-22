@@ -20,20 +20,8 @@
     <context:component-scan base-package="com.news.*" />
     <mvc:annotation-driven />
     <task:annotation-driven />
-    <context:annotation-config/>
+    <!--<context:annotation-config/>-->
     <util:properties id="properties" location="classpath:sources.properties" />
     <util:properties id="sourcesUrl" location="classpath:sources_url_mappings.properties" />
-
-    <bean name="categoryFacade" class="com.news.application.facade.impl.CategoryFacadeImpl"/>
-    <bean name="categoriesMapper" class="com.news.application.facade.mapper.CategoriesMapper"/>
-    <bean name="propertyManager" class="com.news.architecture.util.PropertyManager"/>
-
-    <bean name="sortArticles" class="com.news.application.facade.util.SortArticles" />
-    <bean name="articlesFacade" class="com.news.application.facade.impl.ArticlesFacadeImpl" />
-    <bean name="technologyProvider" class="com.news.providers.impl.CommonNewsProvider" />
-
-    <bean name="romeServiceProvider" class="com.news.providers.Backend.impl.RomeServiceProviderImpl" />
-    <bean id="demoServiceBasicUsageFixedDelay" class="com.news.providers.Backend.impl.ScheduledService"/>
-    <bean id="dataHub" class="com.news.providers.Backend.impl.DataHub"/>
 
 </beans>

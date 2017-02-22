@@ -1,0 +1,20 @@
+*~
+# Built application files
+/*/build/
+build/
+
+# Java class files
+*.class
+
+# Android Studio & Intellij
+*.iml
+.idea
+.gradle
+build/
+
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+
+# Java
+target
+*.class
