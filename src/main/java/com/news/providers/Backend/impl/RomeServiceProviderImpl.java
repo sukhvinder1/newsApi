@@ -33,6 +33,12 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
 
     Logger logger = Logger.getLogger(RomeServiceProviderImpl.class);
 
+    private static final String URL = "url";
+    private static final String SRCINDEX = "src=";
+    private static final String STARTINDEX = "h";
+    private static final char ENDINDEX = '"';
+    private static final String FORWARDSLASH = "/";
+
     @Override
     public ConcurrentHashMap<String, List<Sources>> getAllArticles() {
 
@@ -44,30 +50,6 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         }
 
         return allArticlesMap;
-    }
-
-    private SyndFeed getFeed(String url) {
-
-        if (url == null || url.isEmpty()) {
-            throw new NewsSystemException("url is null or empty");
-        }
-
-        SyndFeed feed = null;
-        try {
-            URL feedUrl = new URL(url);
-            SyndFeedInput input = new SyndFeedInput();
-            feed = input.build(new XmlReader(feedUrl));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            logger.error(ex);
-            throw new NewsSystemException(ex.getMessage());
-        }
-
-        if (feed == null) {
-            throw new NewsSystemException("SyndFeed is null at Rome Provider");
-        }
-
-        return feed;
     }
 
     private List<Sources> prepareDO(SyndFeed feed, String key) {
@@ -83,19 +65,17 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
             for (SyndEntry item : items) {
 
                 String imgURL = null;
-                if (key.equalsIgnoreCase("theVerge") || key.equalsIgnoreCase("technewsworld")) {
-
+                if (key.equalsIgnoreCase(AppConstant.THEVERGE) || key.equalsIgnoreCase(AppConstant.TECHNEWSWORLD)) {
                     imgURL = getImageFromContent(item.getContents().get(0).toString());
-                } else if(key.equalsIgnoreCase("timesOfIndia")) {
-
+                } else if(key.equalsIgnoreCase(AppConstant.TIMESOFINDIA)) {
                     imgURL = getTimesOfIndiaImage(item.getLink());
                 } else {
 
                     List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
 
                     for (Element foreignMarkup : foreignMarkups) {
-                        if (!(foreignMarkup.getAttribute("url") == null)) {
-                            imgURL = foreignMarkup.getAttribute("url").getValue();
+                        if (!(foreignMarkup.getAttribute(URL) == null)) {
+                            imgURL = foreignMarkup.getAttribute(URL).getValue();
                         }
                     }
                     if (imgURL == null) {
@@ -126,10 +106,34 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         return sourcesArrayList;
     }
 
+    private SyndFeed getFeed(String url) {
+
+        if (url == null || url.isEmpty()) {
+            throw new NewsSystemException("url is null or empty");
+        }
+
+        SyndFeed feed = null;
+        try {
+            URL feedUrl = new URL(url);
+            SyndFeedInput input = new SyndFeedInput();
+            feed = input.build(new XmlReader(feedUrl));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            logger.error(ex);
+            throw new NewsSystemException(ex.getMessage());
+        }
+
+        if (feed == null) {
+            throw new NewsSystemException("SyndFeed is null at Rome Provider");
+        }
+
+        return feed;
+    }
+
     public String getImageFromContent(String content) {
-        int srcIndex = content.indexOf("src=");
-        int startIndex = content.indexOf("h", srcIndex);
-        int endIndex = content.indexOf('"', startIndex);
+        int srcIndex = content.indexOf(SRCINDEX);
+        int startIndex = content.indexOf(STARTINDEX, srcIndex);
+        int endIndex = content.indexOf(ENDINDEX, startIndex);
         String s = content.substring(startIndex, endIndex);
         return s;
     }
@@ -137,7 +141,7 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
     public String getTimesOfIndiaImage(String articleUrl){
 
         String str = articleUrl;
-        int index = str.lastIndexOf("/");
+        int index = str.lastIndexOf(FORWARDSLASH);
         String articleId=(str.substring(index +1));
         String imageURL = AppConstant.TIMESOFINDIADOMAIN + articleId;
         return imageURL;

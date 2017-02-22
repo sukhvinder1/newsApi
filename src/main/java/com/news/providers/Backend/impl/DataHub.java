@@ -54,7 +54,11 @@ public class DataHub {
             }
         }
 
-        List<Sources> sources = mainHashMap.get(sourceId);
+        List<Sources> sources = null;
+        if (mainHashMap.containsKey(sourceId)) {
+            sources = mainHashMap.get(sourceId);
+        }
+
         if (ValidationUtil.isCollectionNullOrEmpty(sources)) {
             throw new NewsSystemException("Sources are null at DataHub");
         }
