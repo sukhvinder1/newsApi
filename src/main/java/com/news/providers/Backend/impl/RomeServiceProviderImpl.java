@@ -12,12 +12,11 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 import org.apache.log4j.Logger;
-
-import javax.inject.Inject;
-
 import org.jdom.Element;
 
+import javax.inject.Inject;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +38,7 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
     private static final char END_INDEX = '"';
     private static final String FORWARD_SLASH = "/";
     private static final String HTTP = "http";
+    private static final String DATE_FORMAT = "dd MMM yyyy hh:mm:ss a";
 
     @Override
     public ConcurrentHashMap<String, List<Sources>> getAllArticles() {
@@ -69,8 +69,12 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
                 sources.setTitle(item.getTitle());
                 sources.setUrl(item.getLink());
                 sources.setImageUrl(getImageUrl(item, key));
-                sources.setDate(item.getPublishedDate());
-                sourcesArrayList.add(sources);
+                SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+                if (item.getPublishedDate() != null) {
+                    sources.setDate(sdf.format(item.getPublishedDate()));
+                    // if date is null most likely its not article
+                    sourcesArrayList.add(sources);
+                }
             }
         }
 

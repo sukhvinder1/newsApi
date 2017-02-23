@@ -10,7 +10,7 @@ public class Sources {
     private String url;
     private String imageUrl;
     private String title;
-    private Date date;
+    private String date;
 
     public String getUrl() {
         return url;
@@ -36,11 +36,11 @@ public class Sources {
         this.title = title;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
