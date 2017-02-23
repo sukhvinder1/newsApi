@@ -34,10 +34,11 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
     Logger logger = Logger.getLogger(RomeServiceProviderImpl.class);
 
     private static final String URL = "url";
-    private static final String SRCINDEX = "src=";
-    private static final String STARTINDEX = "h";
-    private static final char ENDINDEX = '"';
-    private static final String FORWARDSLASH = "/";
+    private static final String SRC_INDEX = "src=";
+    private static final String START_INDEX = "h";
+    private static final char END_INDEX = '"';
+    private static final String FORWARD_SLASH = "/";
+    private static final String HTTP = "http";
 
     @Override
     public ConcurrentHashMap<String, List<Sources>> getAllArticles() {
@@ -64,34 +65,10 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
             //TODO date logic still pending
             for (SyndEntry item : items) {
 
-                String imgURL = null;
-                if (key.equalsIgnoreCase(AppConstant.THEVERGE) || key.equalsIgnoreCase(AppConstant.TECHNEWSWORLD)) {
-                    imgURL = getImageFromContent(item.getContents().get(0).toString());
-                } else if(key.equalsIgnoreCase(AppConstant.TIMESOFINDIA)) {
-                    imgURL = getTimesOfIndiaImage(item.getLink());
-                } else {
-
-                    List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
-
-                    for (Element foreignMarkup : foreignMarkups) {
-                        if (!(foreignMarkup.getAttribute(URL) == null)) {
-                            imgURL = foreignMarkup.getAttribute(URL).getValue();
-                        }
-                    }
-                    if (imgURL == null) {
-                        List<SyndEnclosure> encls = item.getEnclosures();
-                        if (!encls.isEmpty()) {
-                            for (SyndEnclosure e : encls) {
-                                imgURL = e.getUrl().toString();
-                            }
-                        }
-                    }
-                }
-
                 Sources sources = new Sources();
                 sources.setTitle(item.getTitle());
                 sources.setUrl(item.getLink());
-                sources.setImageUrl(imgURL);
+                sources.setImageUrl(getImageUrl(item, key));
                 sources.setDate(item.getPublishedDate());
                 sourcesArrayList.add(sources);
             }
@@ -130,20 +107,64 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         return feed;
     }
 
-    public String getImageFromContent(String content) {
-        int srcIndex = content.indexOf(SRCINDEX);
-        int startIndex = content.indexOf(STARTINDEX, srcIndex);
-        int endIndex = content.indexOf(ENDINDEX, startIndex);
-        String s = content.substring(startIndex, endIndex);
-        return s;
+    private String getImageUrl(SyndEntry item, String key) {
+
+        String imgURL = null;
+
+        switch (key) {
+            case AppConstant.THE_VERGE:
+            case AppConstant.TECH_NEWS_WORLD:
+                imgURL = getImageFromContent(item.getContents().get(0).toString());
+                break;
+            case AppConstant.TIMES_OF_INDIA:
+                imgURL = getTimesOfIndiaImage(item.getLink());
+                break;
+            case AppConstant.WIRED_TOP:
+            case AppConstant.WIRED_TECH:
+                if (item.getDescription().getValue() != null) {
+                    imgURL = getImageFromContent(item.getDescription().getValue());
+                }
+                break;
+            default:
+                List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
+                for (Element foreignMarkup : foreignMarkups) {
+                    if (!(foreignMarkup.getAttribute(URL) == null)) {
+                        imgURL = foreignMarkup.getAttribute(URL).getValue();
+                    }
+                }
+                if (imgURL == null) {
+                    List<SyndEnclosure> encls = item.getEnclosures();
+                    if (!encls.isEmpty()) {
+                        for (SyndEnclosure e : encls) {
+                            imgURL = e.getUrl().toString();
+                        }
+                    }
+                }
+                break;
+        }
+
+
+        return imgURL;
     }
 
-    public String getTimesOfIndiaImage(String articleUrl){
+    private String getImageFromContent(String content) {
+        int srcIndex = content.indexOf(SRC_INDEX);
+        int startIndex = content.indexOf(START_INDEX, srcIndex);
+        int endIndex = content.indexOf(END_INDEX, startIndex);
+        String url = content.substring(startIndex, endIndex);
+        // making url null if something matches up and that's not a url
+        if (!url.startsWith(HTTP)) {
+            url = null;
+        }
+        return url;
+    }
+
+    private String getTimesOfIndiaImage(String articleUrl) {
 
         String str = articleUrl;
-        int index = str.lastIndexOf(FORWARDSLASH);
-        String articleId=(str.substring(index +1));
-        String imageURL = AppConstant.TIMESOFINDIADOMAIN + articleId;
+        int index = str.lastIndexOf(FORWARD_SLASH);
+        String articleId = (str.substring(index + 1));
+        String imageURL = AppConstant.TIMES_OF_INDIA_DOMAIN + articleId;
         return imageURL;
 
     }
