@@ -21,6 +21,7 @@ public class DataHub {
     Logger logger = Logger.getLogger(DataHub.class);
 
     private boolean isUpdating = false;
+
     ConcurrentHashMap<String, List<Sources>> mainHashMap = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, List<Sources>> tempHashMap = new ConcurrentHashMap<>();
 
@@ -57,6 +58,8 @@ public class DataHub {
         List<Sources> sources = null;
         if (mainHashMap.containsKey(sourceId)) {
             sources = mainHashMap.get(sourceId);
+        } else {
+            throw new NewsSystemException("Source " + sourceId + " is not available");
         }
 
         if (ValidationUtil.isCollectionNullOrEmpty(sources)) {
