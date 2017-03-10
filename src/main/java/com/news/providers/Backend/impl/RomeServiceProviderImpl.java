@@ -12,12 +12,11 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 import org.apache.log4j.Logger;
-
-import javax.inject.Inject;
-
 import org.jdom.Element;
 
+import javax.inject.Inject;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,10 +33,12 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
     Logger logger = Logger.getLogger(RomeServiceProviderImpl.class);
 
     private static final String URL = "url";
-    private static final String SRCINDEX = "src=";
-    private static final String STARTINDEX = "h";
-    private static final char ENDINDEX = '"';
-    private static final String FORWARDSLASH = "/";
+    private static final String SRC_INDEX = "src=";
+    private static final String START_INDEX = "h";
+    private static final char END_INDEX = '"';
+    private static final String FORWARD_SLASH = "/";
+    private static final String HTTP = "http";
+    private static final String DATE_FORMAT = "dd MMM yyyy hh:mm:ss a";
 
     @Override
     public ConcurrentHashMap<String, List<Sources>> getAllArticles() {
@@ -64,36 +65,16 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
             //TODO date logic still pending
             for (SyndEntry item : items) {
 
-                String imgURL = null;
-                if (key.equalsIgnoreCase(AppConstant.THEVERGE) || key.equalsIgnoreCase(AppConstant.TECHNEWSWORLD)) {
-                    imgURL = getImageFromContent(item.getContents().get(0).toString());
-                } else if(key.equalsIgnoreCase(AppConstant.TIMESOFINDIA)) {
-                    imgURL = getTimesOfIndiaImage(item.getLink());
-                } else {
-
-                    List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
-
-                    for (Element foreignMarkup : foreignMarkups) {
-                        if (!(foreignMarkup.getAttribute(URL) == null)) {
-                            imgURL = foreignMarkup.getAttribute(URL).getValue();
-                        }
-                    }
-                    if (imgURL == null) {
-                        List<SyndEnclosure> encls = item.getEnclosures();
-                        if (!encls.isEmpty()) {
-                            for (SyndEnclosure e : encls) {
-                                imgURL = e.getUrl().toString();
-                            }
-                        }
-                    }
-                }
-
                 Sources sources = new Sources();
                 sources.setTitle(item.getTitle());
                 sources.setUrl(item.getLink());
-                sources.setImageUrl(imgURL);
-                sources.setDate(item.getPublishedDate());
-                sourcesArrayList.add(sources);
+                sources.setImageUrl(getImageUrl(item, key));
+                SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+                if (item.getPublishedDate() != null) {
+                    sources.setDate(sdf.format(item.getPublishedDate()));
+                    // if date is null most likely its not article
+                    sourcesArrayList.add(sources);
+                }
             }
         }
 
@@ -130,20 +111,64 @@ public class RomeServiceProviderImpl implements RomeServiceProvider {
         return feed;
     }
 
-    public String getImageFromContent(String content) {
-        int srcIndex = content.indexOf(SRCINDEX);
-        int startIndex = content.indexOf(STARTINDEX, srcIndex);
-        int endIndex = content.indexOf(ENDINDEX, startIndex);
-        String s = content.substring(startIndex, endIndex);
-        return s;
+    private String getImageUrl(SyndEntry item, String key) {
+
+        String imgURL = null;
+
+        switch (key) {
+            case AppConstant.THE_VERGE:
+            case AppConstant.TECH_NEWS_WORLD:
+                imgURL = getImageFromContent(item.getContents().get(0).toString());
+                break;
+            case AppConstant.TIMES_OF_INDIA:
+                imgURL = getTimesOfIndiaImage(item.getLink());
+                break;
+            case AppConstant.WIRED_TOP:
+            case AppConstant.WIRED_TECH:
+                if (item.getDescription().getValue() != null) {
+                    imgURL = getImageFromContent(item.getDescription().getValue());
+                }
+                break;
+            default:
+                List<Element> foreignMarkups = (List<Element>) item.getForeignMarkup();
+                for (Element foreignMarkup : foreignMarkups) {
+                    if (!(foreignMarkup.getAttribute(URL) == null)) {
+                        imgURL = foreignMarkup.getAttribute(URL).getValue();
+                    }
+                }
+                if (imgURL == null) {
+                    List<SyndEnclosure> encls = item.getEnclosures();
+                    if (!encls.isEmpty()) {
+                        for (SyndEnclosure e : encls) {
+                            imgURL = e.getUrl().toString();
+                        }
+                    }
+                }
+                break;
+        }
+
+
+        return imgURL;
     }
 
-    public String getTimesOfIndiaImage(String articleUrl){
+    private String getImageFromContent(String content) {
+        int srcIndex = content.indexOf(SRC_INDEX);
+        int startIndex = content.indexOf(START_INDEX, srcIndex);
+        int endIndex = content.indexOf(END_INDEX, startIndex);
+        String url = content.substring(startIndex, endIndex);
+        // making url null if something matches up and that's not a url
+        if (!url.startsWith(HTTP)) {
+            url = null;
+        }
+        return url;
+    }
+
+    private String getTimesOfIndiaImage(String articleUrl) {
 
         String str = articleUrl;
-        int index = str.lastIndexOf(FORWARDSLASH);
-        String articleId=(str.substring(index +1));
-        String imageURL = AppConstant.TIMESOFINDIADOMAIN + articleId;
+        int index = str.lastIndexOf(FORWARD_SLASH);
+        String articleId = (str.substring(index + 1));
+        String imageURL = AppConstant.TIMES_OF_INDIA_DOMAIN + articleId;
         return imageURL;
 
     }
