@@ -3,6 +3,7 @@ package com.news.providers.Backend.impl;
 import com.news.application.facade.dto.Sources;
 import com.news.architecture.Exceptions.NewsSystemException;
 import com.news.architecture.util.ValidationUtil;
+import com.news.providers.Backend.RomeServiceProvider;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DataHub {
 
     @Inject
-    private RomeServiceProviderImpl provider;
+    private RomeServiceProvider romeServiceProvider;
 
     Logger logger = Logger.getLogger(DataHub.class);
 
@@ -24,7 +25,7 @@ public class DataHub {
     private ConcurrentHashMap<String, List<Sources>> tempHashMap = new ConcurrentHashMap<>();
 
     public void getLatestNews() {
-        tempHashMap = provider.getAllArticles();
+        tempHashMap = romeServiceProvider.getAllArticles();
 
         if (ValidationUtil.isMapNullOrEmpty(tempHashMap)) {
             logger.error("HashMap is coming null from the provider");
@@ -53,7 +54,11 @@ public class DataHub {
             }
         }
 
-        List<Sources> sources = mainHashMap.get(sourceId);
+        List<Sources> sources = null;
+        if (mainHashMap.containsKey(sourceId)) {
+            sources = mainHashMap.get(sourceId);
+        }
+
         if (ValidationUtil.isCollectionNullOrEmpty(sources)) {
             throw new NewsSystemException("Sources are null at DataHub");
         }
