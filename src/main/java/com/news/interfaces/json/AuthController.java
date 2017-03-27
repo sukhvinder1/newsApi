@@ -24,11 +24,17 @@ public class AuthController {
     @RequestMapping(value = "/testPing", method = RequestMethod.GET)
     public ResponseEntity<String> testPing(@RequestParam String response_type,
                                            @RequestParam String client_id,
-                                           @RequestParam String state){
+                                           @RequestParam String state) {
 
         logger.info("Response type : " + response_type);
         logger.info("client_id  : " + client_id);
         logger.info("state : " + state);
+        return new ResponseEntity<String>("OK", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/token", method = RequestMethod.GET)
+    public ResponseEntity<String> token() {
+        logger.info("::::::::Inside token ::::::::");
         return new ResponseEntity<String>("OK", HttpStatus.OK);
     }
 }
