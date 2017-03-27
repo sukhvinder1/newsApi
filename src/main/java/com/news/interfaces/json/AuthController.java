@@ -19,6 +19,7 @@ public class AuthController {
 
     @RequestMapping(value = "/testPing", method = RequestMethod.GET)
     public ResponseEntity<String> getError(){
+        System.out.println("inside testping");
         return new ResponseEntity<String>("OK", HttpStatus.OK);
     }
 }
