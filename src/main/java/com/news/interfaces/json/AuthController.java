@@ -1,7 +1,5 @@
 package com.news.interfaces.json;
 
-import com.news.application.facade.dto.CategoriesDto;
-import com.news.architecture.Exceptions.NewsSystemException;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +20,12 @@ public class AuthController {
     Logger logger = Logger.getLogger(AuthController.class);
 
     @RequestMapping(value = "/testPing", method = RequestMethod.GET)
-    public ResponseEntity<String> testPing(@RequestParam String response_type,
-                                           @RequestParam String client_id,
+    public ResponseEntity<String> testPing(@RequestParam String code,
                                            @RequestParam String state) {
 
-        logger.info("Response type : " + response_type);
-        logger.info("client_id  : " + client_id);
+        logger.info("Code  : " + code);
         logger.info("state : " + state);
+
         return new ResponseEntity<String>("OK", HttpStatus.OK);
     }
 
