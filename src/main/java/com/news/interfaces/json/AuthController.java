@@ -27,7 +27,7 @@ public class AuthController {
                                            @RequestParam String state) {
 
         String response = redirect_uri + "#access_token=YWJjZGVmZ2hpamtsbW5vcB==" + "&token_type=bearer" +
-                "&state=" + state + "scope=" + scope;
+                "&state=" + state + "&scope=" + scope;
 
         return new ResponseEntity<String>(response, HttpStatus.OK);
     }
