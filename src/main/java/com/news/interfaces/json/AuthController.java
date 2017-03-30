@@ -20,13 +20,16 @@ public class AuthController {
     Logger logger = Logger.getLogger(AuthController.class);
 
     @RequestMapping(value = "/testPing", method = RequestMethod.GET)
-    public ResponseEntity<String> testPing(@RequestParam String code,
+    public ResponseEntity<String> testPing(@RequestParam String response_type,
+                                           @RequestParam String client_id,
+                                           @RequestParam String redirect_uri,
+                                           @RequestParam String scope,
                                            @RequestParam String state) {
 
-        logger.info("Code  : " + code);
-        logger.info("state : " + state);
+        String response = redirect_uri + "#access_token=YWJjZGVmZ2hpamtsbW5vcB==" + "&token_type=bearer" +
+                "&state=" + state + "scope=" + scope;
 
-        return new ResponseEntity<String>("OK", HttpStatus.OK);
+        return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/token", method = RequestMethod.GET)
